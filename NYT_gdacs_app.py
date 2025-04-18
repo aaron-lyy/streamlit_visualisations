@@ -75,23 +75,23 @@ elif tab == "NYT Coverage":
     # ax.set_title('Word Cloud of NYT Summaries')
     # ax.axis('off')
     
-    # fig4 = px.treemap(top_sum, path=['word'], values='count', 
-    #               color='count', title='Treemap of Keywords in NYT Summaries',
-    #               color_continuous_scale='Blues')
+    fig4 = px.treemap(top_sum, path=['word'], values='count', 
+                  color='count', title='Treemap of Keywords in NYT Summaries',
+                  color_continuous_scale='Blues')
     
-    import spacy
-    from collections import Counter
+    # import spacy
+    # from collections import Counter
 
-    nlp = spacy.load("en_core_web_sm")
+    # nlp = spacy.load("en_core_web_sm")
 
-    def extract_entities(text_series, entity_type='GPE'):
-        entities = []
-        for doc in nlp.pipe(text_series.dropna().astype(str), disable=["tagger", "parser"]):
-            entities += [ent.text for ent in doc.ents if ent.label_ == entity_type]
-        return pd.DataFrame(Counter(entities).most_common(10), columns=['Entity','Count'])
+    # def extract_entities(text_series, entity_type='GPE'):
+    #     entities = []
+    #     for doc in nlp.pipe(text_series.dropna().astype(str), disable=["tagger", "parser"]):
+    #         entities += [ent.text for ent in doc.ents if ent.label_ == entity_type]
+    #     return pd.DataFrame(Counter(entities).most_common(10), columns=['Entity','Count'])
 
-    top_places = extract_entities(df_nyt['summary'], entity_type='GPE')
-    fig4 = px.bar(top_places, x='Entity', y='Count', title='Top Mentioned Locations in NYT Summaries')
+    # top_places = extract_entities(df_nyt['summary'], entity_type='GPE')
+    # fig4 = px.bar(top_places, x='Entity', y='Count', title='Top Mentioned Locations in NYT Summaries')
 
 
 else:  # Event Metrics
