@@ -14,7 +14,7 @@ def load_data():
     )
     # NYT coverage dataset
     nyt = pd.read_csv(
-        './Data/processed_nyt_data_20250417_v3.csv',
+        './Data/nyt_temp2_geotext.csv',
         parse_dates=['published_date']
     )
 
@@ -28,7 +28,7 @@ fin, nyt, metrics = load_data()
 
 
 # Sidebar tabs
-tab = st.sidebar.radio("Navigation", [ "GDACS metrics" , "NYT Financial Analysis", "NYT Coverage"])
+tab = st.sidebar.radio("Navigation", [ "GDACS metrics" , "Financial Analysis", "NYT Coverage"])
 
 def top_words(text_series, n=10):
     vec = CountVectorizer(stop_words='english', max_features=1000)
