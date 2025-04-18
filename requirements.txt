@@ -3,3 +3,5 @@ streamlit
 plotly
 scikit-learn
 textblob
+spacy
+collections
