@@ -3,8 +3,6 @@ import streamlit as st
 import plotly.express as px
 from sklearn.feature_extraction.text import CountVectorizer
 from textblob import TextBlob
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
 
 st.set_page_config(layout="wide")
 @st.cache_data
