@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 def load_data():
     # Financial impact dataset
     fin = pd.read_csv(
-        './Data/financial_impact_final.csv',
+        './Data/news_final_Last_version.csv',
         parse_dates=['published_date']
     )
     # NYT coverage dataset
@@ -54,6 +54,18 @@ if tab == "Financial Analysis":
     fig3 = px.histogram(df_fin, x='%Change Event→Next', nbins=20, title='Distribution: Event to Next Day % Change')
     top_ticks = df_fin.groupby('Ticker')['%Change Prev→Next'].mean().nlargest(10).reset_index()
     fig4 = px.bar(top_ticks, x='Ticker', y='%Change Prev→Next', title='Top 10 Tickers by % Change (Prev to Next)')
+    # Plot 5: Disaster Impact Level Distribution
+    impact_counts = df_fin['DisasterImpactLevel'].value_counts().reindex(['Low', 'Medium', 'High']).fillna(0).reset_index()
+    impact_counts.columns = ['Impact Level', 'Article Count']
+    fig5 = px.bar(impact_counts, x='Impact Level', y='Article Count', title="Disaster Impact Level Distribution")
+
+
+    # Plot 6 Boxplot - Financial Impact vs. Disaster Impact Level
+    if 'Financial Impact' in df_fin.columns:
+        fig6 = px.box(df_fin, x='DisasterImpactLevel', y='Financial Impact',
+                        category_orders={'DisasterImpactLevel': ['Low', 'Medium', 'High']},
+                        title="Financial Impact Level vs. Disaster Impact Level",
+                        labels={'DisasterImpactLevel': 'Impact Level', 'Financial Impact': 'Score'})
 
 elif tab == "NYT Coverage":
     st.title("🗞️ NYT Disaster Coverage Dashboard")
@@ -129,3 +141,11 @@ with cols[1]:
     # else:
     #     st.plotly_chart(fig4, use_container_width=True)
     st.plotly_chart(fig4, use_container_width=True)
+
+if tab == "Financial Analysis":
+    st.markdown("---")
+    extra_cols = st.columns(2)
+    with extra_cols[0]:
+        st.plotly_chart(fig5, use_container_width=True)
+    with extra_cols[1]:
+        st.plotly_chart(fig6, use_container_width=True)
